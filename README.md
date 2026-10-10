@@ -241,13 +241,28 @@ npm run build
 
 ---
 
-## AI Assistance Disclosure
+## AI Development Experience
 
-- **Antigravity** generated the initial project structure (folders, backend scaffolding, validators, test suite) before this session.
-- **CodeZero** (this session) performed the audit and built the complete frontend product: design-token CSS system, API client + services, auth/session context with `/auth/me` verification, protected routing, all 8 pages (Login, Register, Dashboard, Tasks, Projects, ProjectDetail, Upcoming, Settings), shared components (Sidebar, AppLayout shell, TaskModal, TaskDetail, ProjectModal, Modal, ConfirmDialog, toasts), the `VITE_API_URL` setup, plus verification (58 backend tests, production build, live end-to-end API smoke test) and this README update. No backend routes or schemas were changed — the existing API was reused as-is.
-- **CodeZero — Phase 2 refinement** (follow-up session): replaced the five generic metric cards with a ruled editorial stat strip, fixed clipped task-table actions (min-width + card breakpoint), fixed run-together deadline rows, humanized all raw enum labels via `statusLabel`/`capitalize`, gave project cards a color edge with task counts, added mobile stacking tables and collapsing form grids, extracted `ScheduleSection`, fixed lint errors, and performed real browser QA (desktop screenshots, 390px/542px iframe viewports, mobile drawer, console/network checks) plus a full UI smoke test (register → project → tasks → edit → status → search → delete → logout → reload).
+I used **CodeZero** as an AI development assistant during the development of TaskOrbit. My goal was to use AI where it could speed up development while understanding, integrating, and verifying the application myself.
 
----
+### Tasks Where I Used AI Assistance
+
+1. **React UI Components:** Used CodeZero to help develop reusable React components, modals, task cards, and responsive layouts.
+2. **UI Improvements:** Used AI suggestions to refine the styling, responsive behavior, and overall user experience.
+3. **Debugging and Code Review:** Used AI assistance to identify potential issues, review code, and suggest fixes that I could evaluate and verify.
+
+### Tasks I Worked on Myself
+
+- **API Development:** Worked on the Express API endpoints and backend logic.
+- **Frontend-Backend Integration:** Connected the React frontend to the backend APIs and verified API requests and responses.
+- **Authentication:** Worked on JWT-based authentication, session handling, and protected routes.
+- **Testing and Verification:** Performed manual testing of application workflows and used automated tests to verify API behavior and identify issues.
+
+### Development Workflow
+
+I followed an iterative development process: implement a feature, review the code, integrate it with the rest of the application, and test the result. I used AI suggestions as assistance rather than accepting them blindly.
+
+The initial project scaffolding was generated using **Antigravity**. I subsequently used **CodeZero** for frontend development, UI refinement, debugging assistance, and verification. I reviewed and tested the resulting implementation as part of the development process.
 
 ## License
 
