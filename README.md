@@ -2,6 +2,16 @@
 
 A full-stack **MERN** project and task management application built for an internship assignment.
 
+## Features
+
+- **Auth** — register, login, persistent session with JWT, protected routes, logout.
+- **Overview dashboard** — greeting, live task metrics (total / to-do / in-progress / completed / overdue) that link to filtered task views, per-project progress bars, upcoming deadlines, and a priority task table with one-click "mark done".
+- **My Tasks** — search, status / priority / project filters, overdue-only toggle, 6 sort orders, result counts, create / view / edit / advance-status / delete with confirmation.
+- **Projects** — search, status filter, progress cards with task counts, project detail page with its tasks, cascade delete (project deletion removes its tasks, never orphans).
+- **Upcoming** — overdue, next-7-days, and later groupings derived from real due dates.
+- **Settings** — signed-in profile (from `GET /api/auth/me`) and working logout.
+- **Design** — warm paper + ivory + forest-green editorial theme, responsive sidebar → mobile drawer, stacked cards on small screens, toasts, accessible dialogs, reduced-motion support.
+
 ## Tech Stack
 
 | Layer    | Technology                                                    |
@@ -22,15 +32,15 @@ TaskOrbit/
 │   └── src/
 │       ├── assets/          # Static images & SVGs
 │       ├── components/      # Reusable UI components
-│       │   ├── common/      # Buttons, inputs, modals, loaders
-│       │   ├── layout/      # Sidebar, header, navigation
-│       │   ├── dashboard/   # Dashboard widgets
-│       │   ├── projects/    # Project cards & forms
-│       │   └── tasks/       # Task cards, Kanban, filters
-│       ├── context/         # AuthContext (global auth state)
-│       ├── hooks/           # useDebounce, useLocalStorage, …
-│       ├── layouts/         # AppLayout (authenticated shell)
-│       ├── pages/           # Page-level components
+│       │   ├── common/      # Modal, ConfirmDialog, EmptyState, Badges
+│       │   ├── layout/      # Sidebar (+ CSS)
+│       │   ├── projects/    # ProjectModal
+│       │   └── tasks/       # TaskModal, TaskDetail
+│       ├── context/         # AuthContext (verified session), ToastContext
+│       ├── hooks/           # useDebounce, useLocalStorage
+│       ├── layouts/         # AppLayout (sidebar shell + mobile topbar)
+│       ├── pages/           # Login, Register, Dashboard, Tasks, Projects,
+│       │                    # ProjectDetail, Upcoming, Settings (+ CSS)
 │       ├── routes/          # ProtectedRoute guard
 │       ├── services/        # Axios API client + service modules
 │       └── utils/           # formatters.js, helpers
@@ -85,17 +95,23 @@ TaskOrbit/
    cd client
    ```
 
-2. Install client dependencies:
+2. Install dependencies (includes axios, react-router-dom, lucide-react):
    ```bash
-   npm install axios react-router-dom
+   npm install
    ```
 
-3. Start the Vite development server:
+3. (Optional) copy the example env file and point it at your API:
+   ```bash
+   cp .env.example .env
+   # VITE_API_URL=http://localhost:5000/api
+   ```
+
+4. Start the Vite development server (in a separate terminal from the backend):
    ```bash
    npm run dev
    ```
 
-4. Production build:
+5. Production build:
    ```bash
    npm run build
    ```
@@ -187,6 +203,49 @@ npm run test:verbose
 | `CLIENT_ORIGIN`  | Allowed CORS origin for frontend requests           | `http://localhost:5173` |
 
 > ⚠️ Never commit `.env` or `.env.test` files to version control. Both are ignored in `.gitignore`.
+
+---
+
+## Running Everything (cheat sheet)
+
+```bash
+# Backend API (terminal 1)
+cd server
+npm install
+cp .env.example .env   # then fill in MONGO_URI + JWT_SECRET
+npm run dev            # http://localhost:5000
+
+# Frontend (terminal 2)
+cd client
+npm install
+npm run dev            # http://localhost:5173
+
+# Backend tests (isolated in-memory MongoDB, safe to run anytime)
+cd server
+npm test
+
+# Frontend production build
+cd client
+npm run build
+```
+
+---
+
+## Known Limitations
+
+- No pagination: task/project lists return the full user-scoped result set. Fine for personal-scale data; add pagination if collections grow large.
+- No profile editing or password change: the API has no endpoint for it, so Settings is intentionally read-only plus logout.
+- Task creation is scoped to a project (`POST /api/projects/:id/tasks`); there is no standalone `POST /api/tasks`.
+- JWTs are stored in `localStorage` (existing architecture). Trade-off: simple and works across refreshes, but vulnerable to XSS — the app avoids `dangerouslySetInnerHTML` and renders only trusted API data to mitigate this.
+- The default project `color` in the database schema is an indigo fallback (`#6366f1`); the UI always assigns warm palette colors on create.
+
+---
+
+## AI Assistance Disclosure
+
+- **Antigravity** generated the initial project structure (folders, backend scaffolding, validators, test suite) before this session.
+- **CodeZero** (this session) performed the audit and built the complete frontend product: design-token CSS system, API client + services, auth/session context with `/auth/me` verification, protected routing, all 8 pages (Login, Register, Dashboard, Tasks, Projects, ProjectDetail, Upcoming, Settings), shared components (Sidebar, AppLayout shell, TaskModal, TaskDetail, ProjectModal, Modal, ConfirmDialog, toasts), the `VITE_API_URL` setup, plus verification (58 backend tests, production build, live end-to-end API smoke test) and this README update. No backend routes or schemas were changed — the existing API was reused as-is.
+- **CodeZero — Phase 2 refinement** (follow-up session): replaced the five generic metric cards with a ruled editorial stat strip, fixed clipped task-table actions (min-width + card breakpoint), fixed run-together deadline rows, humanized all raw enum labels via `statusLabel`/`capitalize`, gave project cards a color edge with task counts, added mobile stacking tables and collapsing form grids, extracted `ScheduleSection`, fixed lint errors, and performed real browser QA (desktop screenshots, 390px/542px iframe viewports, mobile drawer, console/network checks) plus a full UI smoke test (register → project → tasks → edit → status → search → delete → logout → reload).
 
 ---
 

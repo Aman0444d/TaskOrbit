@@ -1,0 +1,92 @@
+/* Statistic ledger — one ruled strip instead of five identical cards */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.stat {
+  background: none;
+  border: none;
+  border-left: 1px solid var(--border);
+  padding: 14px 14px 13px;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.stat:first-child { border-left: none; }
+.stat:hover { background: #faf8f1; }
+.stat:hover .stat-label { color: var(--accent-hover); }
+.stat-value {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stat-overdue { background: #faf1ef; }
+.stat-overdue .stat-value { color: var(--error); }
+.stat-overdue:hover { background: #f7e9e7; }
+
+.dash-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 20px; }
+.progress-list, .deadline-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.progress-list > li + li { border-top: 1px solid var(--border); }
+.deadline-list { gap: 4px; }
+.progress-row, .deadline-row {
+  width: 100%; background: transparent; border: 1px solid transparent;
+  border-radius: var(--radius-sm); padding: 10px 8px; cursor: pointer; font: inherit; color: var(--ink);
+  text-align: left; display: flex; flex-direction: column; gap: 8px;
+}
+.progress-row:hover, .deadline-row:hover { background: #faf8f1; border-color: var(--border); }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.progress-name { font-weight: 650; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.progress-pct { font-variant-numeric: tabular-nums; }
+.swatch { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; display: inline-block; }
+.progress-bar { height: 7px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; }
+.progress-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.deadline-row { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; }
+.deadline-row > span:first-child { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.deadline-row .row-title { overflow: hidden; text-overflow: ellipsis; }
+.deadline-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  background: var(--surface); flex-wrap: wrap;
+}
+
+.detail-list { margin: 0 0 16px; display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.detail-list > div { display: grid; grid-template-columns: 130px 1fr; gap: 10px; padding: 9px 12px; font-size: 14px; }
+.detail-list > div + div { border-top: 1px solid var(--border); }
+.detail-list dt { color: var(--ink-2); font-weight: 600; font-size: 13px; }
+.detail-list dd { margin: 0; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-width: 1000px) {
+  .dash-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  .stat { border-top: 1px solid var(--border); }
+  .stat:nth-child(-n+2) { border-top: none; }
+  .stat:nth-child(odd) { border-left: none; }
+  .stat { padding: 12px 14px; }
+  .stat-value { font-size: 24px; }
+}

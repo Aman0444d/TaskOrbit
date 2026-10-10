@@ -1,17 +1,31 @@
-/**
- * layouts/AppLayout.jsx
- * Authenticated application shell — renders Sidebar + Header + page content.
- * Used by all protected pages.
- *
- * TODO: Build out Sidebar and Header components in components/layout/
- */
-const AppLayout = ({ children }) => {
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Menu } from 'lucide-react';
+import Sidebar from '../components/layout/Sidebar';
+import './AppLayout.css';
+
+const AppLayout = () => {
+  const [navOpen, setNavOpen] = useState(false);
+
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* <Sidebar /> */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* <Header /> */}
-        <main style={{ flex: 1, padding: '1.5rem' }}>{children}</main>
+    <div className="app-shell">
+      <Sidebar open={navOpen} onClose={() => setNavOpen(false)} />
+      <div className="app-main">
+        <header className="app-topbar">
+          <button
+            type="button"
+            className="icon-btn menu-btn"
+            onClick={() => setNavOpen((v) => !v)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={navOpen}
+          >
+            <Menu size={20} />
+          </button>
+          <span className="topbar-label">TaskOrbit workspace</span>
+        </header>
+        <main className="app-content">
+          <Outlet />
+        </main>
       </div>
     </div>
   );

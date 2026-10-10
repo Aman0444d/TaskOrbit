@@ -1,0 +1,43 @@
+.auth-wrap {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg);
+}
+.auth-card {
+  max-width: 480px;
+  width: 100%;
+  margin: auto;
+  padding: 48px 40px;
+}
+.auth-card h1 { font-size: 32px; margin: 18px 0 6px; }
+.auth-brand { display: flex; align-items: center; gap: 10px; }
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 42px; }
+.password-toggle { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+.auth-submit { width: 100%; justify-content: center; padding: 12px; font-size: 15px; }
+.auth-switch { margin-top: 18px; font-size: 14px; color: var(--ink-2); }
+.auth-side {
+  background: var(--accent);
+  color: #f2f0e6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding: 56px;
+}
+.auth-side blockquote {
+  font-family: var(--serif);
+  font-size: 28px;
+  line-height: 1.35;
+  margin: 0;
+}
+.auth-side ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.auth-side li { font-size: 15px; opacity: 0.9; padding-left: 22px; position: relative; }
+.auth-side li::before { content: "—"; position: absolute; left: 0; opacity: 0.7; }
+
+@media (max-width: 900px) {
+  .auth-wrap { grid-template-columns: 1fr; }
+  .auth-side { display: none; }
+  .auth-card { padding: 32px 20px; }
+}

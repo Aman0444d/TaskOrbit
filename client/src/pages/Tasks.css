@@ -1,0 +1,45 @@
+.filter-bar { margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; }
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px 12px; color: var(--ink-2);
+}
+.search-box input { border: none; background: transparent; font: inherit; font-size: 14px; flex: 1; color: var(--ink); }
+.search-box input:focus { outline: none; }
+.search-box:focus-within { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+.filter-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end; }
+.filter-row label { display: flex; flex-direction: column; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.06em; }
+.filter-row select {
+  font: inherit; font-size: 14px; text-transform: none; letter-spacing: normal; font-weight: 500;
+  color: var(--ink); background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 8px 10px; min-width: 140px;
+}
+.check-label { flex-direction: row !important; align-items: center; gap: 8px !important; padding-bottom: 9px; }
+.check-label input { width: 16px; height: 16px; accent-color: var(--accent); }
+
+.link-title {
+  background: none; border: none; padding: 0; cursor: pointer;
+  font: inherit; font-weight: 650; color: var(--ink); text-align: left;
+}
+.link-title:hover { color: var(--accent); text-decoration: underline; }
+.badge-btn { background: none; border: none; padding: 0; cursor: pointer; }
+.row-actions { display: flex; gap: 4px; justify-content: flex-end; }
+.row-actions .btn { white-space: nowrap; }
+table.data td:last-child, table.data th:last-child { white-space: nowrap; }
+.btn-ghost.danger { color: var(--error); }
+.btn-ghost.danger:hover { background: #f7e9e7; color: var(--error); }
+
+.card-list { display: none; }
+
+@media (max-width: 900px) {
+  .task-table { display: none; }
+  .card-list { display: flex; flex-direction: column; gap: 10px; }
+  .task-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .task-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-row select { min-width: 0; flex: 1; }
+  .filter-row label { flex: 1 1 calc(50% - 12px); min-width: 140px; }
+}

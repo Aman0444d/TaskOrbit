@@ -24,7 +24,37 @@ export const formatDate = (date) => {
  */
 export const isOverdue = (date) => {
   if (!date) return false;
-  return new Date(date) < new Date();
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return d < today;
+};
+
+/**
+ * Formats a date into date + time.
+ */
+export const formatDateTime = (date) => {
+  if (!date) return '—';
+  const d = new Date(date);
+  if (Number.isNaN(d.getTime())) return '—';
+  return d.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+};
+
+/**
+ * Personalized greeting based on time of day.
+ */
+export const greetingFor = (hour = new Date().getHours()) => {
+  if (hour < 5) return 'Good night';
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
+  return 'Good evening';
 };
 
 /**
